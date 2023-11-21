@@ -104,20 +104,37 @@ function calcRatingPrediction(normalizedRatings, userSimilarities, n, item) {
     return a / b;
 }
 
-const userRatings = getUserRatings(data);
-const normalizedRatings = getNormalizedRatings(userRatings);
-const userSimilarities = getUserSimilarities(normalizedRatings, 'thanh_nguyen');
-const ratingPredictions = getRatingPredictions(
-    data,
-    normalizedRatings,
-    userSimilarities,
-    'thanh_nguyen',
-    2
-);
-console.log(ratingPredictions);
+function collaborativeFiltering(data, targetUser) {
+    const userRatings = getUserRatings(data);
+    const normalizedRatings = getNormalizedRatings(userRatings);
+    const userSimilarities = getUserSimilarities(normalizedRatings, targetUser);
+    const ratingPredictions = getRatingPredictions(
+        data,
+        normalizedRatings,
+        userSimilarities,
+        targetUser,
+        2
+    );
+    return ratingPredictions;
+}
 
-// Ví dụ sử dụng
-// const targetUser = 'nam_tran';
-// const recommendedItems = collaborativeFilteringNormalized(data, targetUser);
+// [
+//     'nam_tran',
+//     'ngoc_nguyen',
+//     'minh_le',
+//     'tuan_do',
+//     'quang_nguyen',
+//     'mai_tran',
+//     'thanh_nguyen',
+//     'hong_le',
+//     'tuan_truong',
+//     'anh_vu',
+//     'hoang_nguyen',
+//     'linh_tran',
+// ].forEach((u) => {
+//     const recommendedItems = collaborativeFiltering(data, u);
+//     console.log(`Recommended items for ${u}:`, recommendedItems);
+// });
 
-// console.log(`Recommended items for ${targetUser}:`, recommendedItems);
+const recommendedItems = collaborativeFiltering(data, 'b');
+console.log(`Recommended items for ${'b'}:`, recommendedItems);
